@@ -43,4 +43,116 @@ Object.keys(db).forEach((modelName) => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
+///*** Relations */
+
+// User to Parent relation (1-1)
+db.User.hasOne(db.Parent, {
+  as: "parent",
+  foreignKey: {
+    name: "userId",
+    unique: true,
+    msg: "Already Have a Parent Profile",
+  },
+});
+db.Parent.belongsTo(db.User, {
+  as: "user",
+});
+
+// User to Child relation (1-1)
+db.User.hasOne(db.Child, {
+  as: "child",
+  foreignKey: {
+    name: "userId",
+    unique: true,
+    msg: "Already Have a Parent Profile",
+  },
+});
+db.Child.belongsTo(db.User, {
+  as: "user",
+});
+
+// Parent to Milestone relation (1-M)
+db.Parent.hasMany(db.Milestone, {
+  as: "parent",
+  foreignKey: {
+    name: "parentId",
+  },
+});
+db.Milestone.belongsTo(db.Parent, {
+  as: "milestone",
+  foreignKey: {
+    name: "parentId",
+  },
+});
+
+// Child to Milestone relation (1-M)
+db.Child.hasMany(db.Milestone, {
+  as: "child",
+  foreignKey: {
+    name: "childId",
+  },
+});
+db.Milestone.belongsTo(db.Child, {
+  as: "milestoneId",
+  foreignKey: {
+    name: "childId",
+  },
+});
+
+// Milestone to Task relation (1-M)
+db.Milestone.hasMany(db.Task, {
+  as: "task",
+  foreignKey: {
+    name: "milestoneId",
+  },
+});
+db.Task.belongsTo(db.Milestone, {
+  as: "milestone",
+  foreignKey: {
+    name: "milestoneId",
+  },
+});
+
+// Child to Transaction relation (1-M)
+db.Child.hasMany(db.Transaction, {
+  as: "transaction",
+  foreignKey: {
+    name: "childId",
+  },
+});
+db.Transaction.belongsTo(db.Child, {
+  as: "child",
+  foreignKey: {
+    name: "childId",
+  },
+});
+
+// Parent to Transaction relation (1-M)
+db.Parent.hasMany(db.Transaction, {
+  as: "transaction",
+  foreignKey: {
+    name: "parentId",
+  },
+});
+db.Transaction.belongsTo(db.Parent, {
+  as: "parent",
+  foreignKey: {
+    name: "parentId",
+  },
+});
+
+// Parent to Child relation (M-M)
+db.Parent.belongsToMany(db.Child, {
+  through: "Family",
+  foreignKey: {
+    name: "parentId",
+  },
+});
+
+db.Child.belongsToMany(db.Parent, {
+  through: "Family",
+  foreignKey: {
+    name: "childId",
+  },
+});
 module.exports = db;

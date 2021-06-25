@@ -10,6 +10,12 @@ require("dotenv").config();
 const app = express();
 
 // Importing routes
+const userRoutes = require("./api/user/routes");
+const parentRoutes = require("./api/parent/routes");
+const childRoutes = require("./api/child/routes");
+const milestoneRoutes = require("./api/milestone/routes");
+const taskRoutes = require("./api/task/routes");
+const transactionRoutes = require("./api/transaction/routes");
 
 // Passport Strategies
 const { localStrategy, jwtStrategy } = require("./middleware/passport");
@@ -27,6 +33,12 @@ passport.use(localStrategy);
 passport.use(jwtStrategy);
 
 // Using routes
+app.use("/users", userRoutes);
+app.use("/parents", parentRoutes);
+app.use("/children", childRoutes);
+app.use("/milestones", milestoneRoutes);
+app.use("/tasks", taskRoutes);
+app.use("/transactions", transactionRoutes);
 
 // Handling Errors
 app.use((err, req, res, next) => {
