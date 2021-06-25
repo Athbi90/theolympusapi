@@ -74,7 +74,7 @@ exports.taskCompleted = async (req, res, next) => {
       const value = milestone.totalValue - task.taskValue;
       milestone.update({ totalValue: value });
     }
-    res.json("Task has been completed");
+    res.json(task);
   } catch (error) {
     next(error);
   }

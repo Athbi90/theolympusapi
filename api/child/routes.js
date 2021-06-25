@@ -8,6 +8,7 @@ const {
   updateChild,
   createChild,
   fetchChild,
+  listChildren,
 } = require("./controllers");
 
 // Param Middleware
@@ -36,4 +37,5 @@ router.delete(
   deleteChild
 );
 
+router.get("/", listChildren);
 module.exports = router;

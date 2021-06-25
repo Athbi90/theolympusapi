@@ -47,9 +47,7 @@ exports.sendFund = async (req, res, next) => {
       const childBalance = +child.balance + req.body.fund;
       await parent.update({ balance: parentBalance });
       await child.update({ balance: childBalance });
-      res.json("Funds Transferred ").end();
-    } else {
-      res.json("Insuffiecient Fund");
+      res.json(parent);
     }
   } catch (error) {
     next(error);
@@ -81,6 +79,16 @@ exports.deleteParent = async (req, res, next) => {
     });
     await parent.destroy();
     res.status(204).end();
+  } catch (err) {
+    next(err);
+  }
+};
+
+// List Parent
+exports.listParent = async (req, res, next) => {
+  try {
+    const parents = await Parent.findAll();
+    res.json(parents);
   } catch (err) {
     next(err);
   }

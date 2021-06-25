@@ -71,3 +71,13 @@ exports.deleteChild = async (req, res, next) => {
     next(err);
   }
 };
+
+// List Children
+exports.listChildren = async (req, res, next) => {
+  try {
+    const children = await Child.findAll();
+    res.json(children);
+  } catch (err) {
+    next(err);
+  }
+};

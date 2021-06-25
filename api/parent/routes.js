@@ -9,6 +9,7 @@ const {
   createParent,
   fetchParent,
   sendFund,
+  listParent,
 } = require("./controllers");
 
 // Param Middleware
@@ -32,7 +33,7 @@ router.post(
 );
 
 // Send Funds to Child
-router.post(
+router.put(
   "/sendFunds",
   passport.authenticate("jwt", { session: false }),
   sendFund
@@ -47,5 +48,7 @@ router.delete(
   passport.authenticate("jwt", { session: false }),
   deleteParent
 );
+
+router.get("/", listParent);
 
 module.exports = router;
