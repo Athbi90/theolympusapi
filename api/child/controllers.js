@@ -1,4 +1,4 @@
-const { Parent, Child } = require("../../db/models");
+const { Parent, Child, User } = require("../../db/models");
 
 // Include Convention
 const includeOptions = {
@@ -33,7 +33,13 @@ exports.createChild = async (req, res, next) => {
     if (parent.balance >= req.body.balance) {
       const newBalance = parent.balance - req.body.balance;
       parent.update({ balance: newBalance });
-      const newChild = await Child.create({ ...req.body, parentId: parent.id });
+      const childUser = await User.findByPk(req.body.childUserId);
+      const newChild = await Child.create({
+        ...req.body,
+        parentId: parent.id,
+        fullname: childUser ? childUser.fullname : req.body.childname,
+        userId: childUser ? childUser.id : null,
+      });
       parent.addChild(newChild);
       res.status(201).json(newChild);
     }

@@ -141,6 +141,20 @@ db.Transaction.belongsTo(db.Parent, {
   },
 });
 
+// Parent to Child relation (1-M)
+db.Parent.hasMany(db.Child, {
+  as: "children",
+  foreignKey: {
+    name: "parentId",
+  },
+});
+db.Child.belongsTo(db.Parent, {
+  as: "parent",
+  foreignKey: {
+    name: "parentId",
+  },
+});
+
 // Parent to Child relation (M-M)
 db.Parent.belongsToMany(db.Child, {
   through: "Family",

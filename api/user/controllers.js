@@ -95,3 +95,12 @@ exports.fetchUser = async (userId, next) => {
     next(error);
   }
 };
+
+exports.listUsers = async (req, res, next) => {
+  try {
+    const users = await User.findAll();
+    res.json(users);
+  } catch (error) {
+    next(error);
+  }
+};

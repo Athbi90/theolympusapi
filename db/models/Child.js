@@ -8,6 +8,10 @@ module.exports = (sequelize, DataTypes) => {
     transaction_limit: {
       type: DataTypes.DECIMAL,
     },
+    fullname: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
   });
   return Child;
 };

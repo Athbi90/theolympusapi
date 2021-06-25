@@ -9,6 +9,7 @@ const {
   fetchUser,
   userUpdate,
   userDelete,
+  listUsers,
 } = require("./controllers");
 
 // Param Middleware
@@ -34,10 +35,13 @@ router.post(
 );
 
 // user details
+router.get("/", passport.authenticate("jwt", { session: false }), fetchUser);
+
+// List USers
 router.get(
-  "/user",
+  "/listUsers",
   passport.authenticate("jwt", { session: false }),
-  fetchUser
+  listUsers
 );
 
 // Deleting Users

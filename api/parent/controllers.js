@@ -1,4 +1,4 @@
-const { Parent, Child } = require("../../db/models");
+const { Parent, Child, User } = require("../../db/models");
 
 // Include Convention
 const includeOptions = {
@@ -62,7 +62,7 @@ exports.updateParent = async (req, res, next) => {
         userId: req.user.id,
       },
     });
-    const updatedProfile = await child.update(req.body);
+    const updatedProfile = await parent.update(req.body);
     res.json(updatedProfile);
   } catch (err) {
     next(err);
@@ -91,5 +91,24 @@ exports.listParent = async (req, res, next) => {
     res.json(parents);
   } catch (err) {
     next(err);
+  }
+};
+
+exports.listChildren = async (req, res, next) => {
+  try {
+    console.log(req.user);
+    const parent = await Parent.findOne({
+      where: {
+        userId: req.user.id,
+      },
+    });
+    const childs = await Child.findAll({
+      where: {
+        parentId: parent.id,
+      },
+    });
+    res.json(childs);
+  } catch (error) {
+    next(error);
   }
 };
