@@ -53,9 +53,10 @@ exports.updateChild = async (req, res, next) => {
   try {
     const child = await Child.findOne({
       where: {
-        userId: req.user.id,
+        id: req.body.childId,
       },
     });
+    console.log(child);
     const updatedProfile = await child.update(req.body);
     res.json(updatedProfile);
   } catch (err) {

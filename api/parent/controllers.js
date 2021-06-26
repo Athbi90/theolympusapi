@@ -96,7 +96,6 @@ exports.listParent = async (req, res, next) => {
 
 exports.listChildren = async (req, res, next) => {
   try {
-    console.log(req.user);
     const parent = await Parent.findOne({
       where: {
         userId: req.user.id,

@@ -9,8 +9,8 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: sequelize.fn("NOW"),
     },
     is_approved: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: false,
+      type: DataTypes.STRING,
+      defaultValue: "pending",
     },
   });
   return Transaction;
