@@ -19,9 +19,7 @@ exports.createTask = async (req, res, next) => {
       },
     });
 
-    const milestone = await Milestone.findOne({
-      where: { name: req.body.milestone, parentId: parent.id },
-    });
+    const milestone = await Milestone.findByPk(req.body.milestoneId);
 
     if (milestone) {
       const newTask = await Task.create({
@@ -40,21 +38,9 @@ exports.createTask = async (req, res, next) => {
 //Update Task
 exports.updateTask = async (req, res, next) => {
   try {
-    const parentId = await User.findOne({
-      where: {
-        username: req.body.parentUsername,
-      },
-    });
+    console.log(req.body);
+    const task = await Task.findByPk(req.body.taskId);
 
-    const parent = await Parent.findOne({
-      where: {
-        userId: parentId.id,
-      },
-    });
-
-    const task = await Task.findOne({
-      where: { parentId: parent.id, name: req.body.taskName },
-    });
     const updatedTask = await task.update(req.body);
     res.json(updatedTask);
   } catch (err) {
@@ -65,7 +51,7 @@ exports.updateTask = async (req, res, next) => {
 // Task Completed
 exports.taskCompleted = async (req, res, next) => {
   try {
-    console.log(req.body.id);
+    console.log(req.body);
     const task = await Task.findByPk(req.body.id);
     const milestone = await Milestone.findByPk(task.milestoneId);
     task.update({ is_completed: true });

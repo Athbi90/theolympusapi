@@ -29,7 +29,7 @@ router.param("taskId", async (req, res, next, taskId) => {
 router.post("/", passport.authenticate("jwt", { session: false }), createTask);
 
 //Update Task
-router.put("/", passport.authenticate("jwt", { session: false }), updateTask);
+router.put("/", updateTask);
 
 //Complete Task
 router.put(

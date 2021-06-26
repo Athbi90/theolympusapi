@@ -12,8 +12,8 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
     is_completed: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: false,
+      type: DataTypes.STRING,
+      defaultValue: "false",
     },
   });
   return Task;
