@@ -65,7 +65,8 @@ exports.updateTask = async (req, res, next) => {
 // Task Completed
 exports.taskCompleted = async (req, res, next) => {
   try {
-    const task = await Task.findByPk(req.body.taskId);
+    console.log(req.body.id);
+    const task = await Task.findByPk(req.body.id);
     const milestone = await Milestone.findByPk(task.milestoneId);
     task.update({ is_completed: true });
     if (task.taskValue >= milestone.totalValue) {
