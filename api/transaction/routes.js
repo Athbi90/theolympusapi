@@ -25,11 +25,7 @@ router.param("transactionId", async (req, res, next, transactionId) => {
 });
 
 //Create Transaction Profile
-router.post(
-  "/",
-  passport.authenticate("jwt", { session: false }),
-  createTransaction
-);
+router.post("/", createTransaction);
 
 //Update Transaction Profile
 router.put(
